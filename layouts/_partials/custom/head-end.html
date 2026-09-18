@@ -1,0 +1,51 @@
+<script>
+
+  window.addEventListener('DOMContentLoaded', (event) => {
+
+    // Show share button if the browser supports the Web Share API
+    if (navigator.share) {
+      document.documentElement.classList.add('-has-share-api');
+    }
+    
+    // Function to convert image URL to Blob
+    image_to_blob = async (image_url) => {
+      const response = await fetch(image_url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return await response.blob();
+    };
+
+    // Add click event listener to share buttons
+    document.querySelectorAll('.mo-share-button').forEach(button => {
+      button.addEventListener('click', event => {
+        
+        const btn = event.target;
+        const image_url = btn.getAttribute('data-image-url') || 'movember.com';
+        const file_name = btn.getAttribute('data-file-name') || 'Movember image.jpg';
+
+        const data = {
+          title: btn.getAttribute('data-title') || 'Movember',
+          text: btn.getAttribute('data-text') || '@movember #movember'
+        };
+        
+        const share = image_to_blob(image_url).then(blob => {
+          const files = [new File([blob], file_name, { type: blob.type })];
+          data.files = files;
+          try {
+            if (!(navigator.canShare(data))) {
+              throw new Error("Can't share data.", data);
+            }
+            navigator.share(data);
+          } catch (err) {
+            console.error(err.name, err.message);
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching image:', err);
+        });
+      });
+    });
+  });
+
+</script>

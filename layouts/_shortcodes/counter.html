@@ -1,0 +1,10 @@
+{{/* Initialize counter if not already set */}}
+{{ if not (.Page.Scratch.Get "counter") }}
+  {{ .Page.Scratch.Set "counter" 0 }}
+{{ end }}
+
+{{/* Increment counter */}}
+{{ $current := add (.Page.Scratch.Get "counter") 1 }}
+{{ .Page.Scratch.Set "counter" $current }}
+
+<div class="mo-counter">{{ $current }}</div>

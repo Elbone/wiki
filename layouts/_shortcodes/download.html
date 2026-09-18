@@ -1,0 +1,25 @@
+<div class="hextra-card mo-download-card" >
+  <a 
+    href="{{ .Get "href" }}"{{ with .Get "download" }} 
+    download="{{ . }}"{{ end }}>
+    <img src="{{ .Get "href" }}" style="margin-bottom: 12px;" />
+  </a>
+
+  <div class="hx:flex hx:justify-center hx:gap-4">
+    <a 
+      href="{{ .Get "href" }}"{{ with .Get "download" }} 
+      download="{{ . }}"{{ end }}>
+      {{ .Get "button" | default "Download" }}
+    </a>
+    <button 
+      class="mo-share-button"
+      data-image-url="{{ .Get "href" }}"
+      data-file-name="{{ .Get "download" | default "Movember image" }}"
+      data-title="{{ .Get "title" | default "Movember" }}"
+      data-text="{{ .Get "text" | default "Image" }} #movember @movember">
+      {{ .Get "share"| default "Share" }}
+    </button>
+  </div>
+
+</div>  
+

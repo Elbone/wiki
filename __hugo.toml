@@ -1,0 +1,4 @@
+baseURL = 'https://wiki.movember.com/'
+languageCode = 'en-us'
+title = 'Movember Wiki'
+theme = 'hextra'
